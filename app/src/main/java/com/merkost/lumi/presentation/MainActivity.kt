@@ -1,4 +1,4 @@
-package com.merkost.lumi
+package com.merkost.lumi.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

@@ -28,6 +28,7 @@ android {
         versionName = "1.0"
 
         buildConfigField("String", "MOVIE_DB_AUTH_TOKEN", "\"$movieDbToken\"")
+        buildConfigField("String", "MOVIE_DB_BASE_URL", "\"https://api.themoviedb.org/3/\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
