@@ -32,13 +32,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
+import coil.compose.SubcomposeAsyncImage
+import coil.request.ImageRequest
 import com.merkost.lumi.R
 import com.merkost.lumi.domain.models.Movie
 import com.merkost.lumi.presentation.components.ErrorView
@@ -130,14 +132,24 @@ fun MovieItem(movie: Movie) {
             .background(MaterialTheme.colorScheme.surface)
     ) {
         Box {
-            val imagePainter = rememberAsyncImagePainter(movie.image?.medium)
 
-            Image(
-                painter = imagePainter,
+            SubcomposeAsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(movie.image?.medium)
+                    .crossfade(true)
+                    .build(),
                 contentDescription = movie.title,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(240.dp),
+                error = {
+                    Image(
+                        painter = painterResource(id = R.drawable.no_image_placeholder),
+                        contentDescription = "Error loading image",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                },
 
                 contentScale = ContentScale.Crop
             )
