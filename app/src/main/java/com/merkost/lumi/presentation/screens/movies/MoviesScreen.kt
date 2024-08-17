@@ -31,21 +31,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.SubcomposeAsyncImage
-import coil.request.ImageRequest
 import com.merkost.lumi.R
 import com.merkost.lumi.domain.models.Movie
 import com.merkost.lumi.presentation.components.ErrorView
 import com.merkost.lumi.presentation.components.LottieLoading
 import com.merkost.lumi.presentation.components.LumiTopAppBar
+import com.merkost.lumi.presentation.components.MoviePoster
 import com.merkost.lumi.presentation.viewmodels.MoviesViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -133,25 +130,12 @@ fun MovieItem(movie: Movie) {
     ) {
         Box {
 
-            SubcomposeAsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(movie.image?.medium)
-                    .crossfade(true)
-                    .build(),
-                contentDescription = movie.title,
+            MoviePoster(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(240.dp),
-                error = {
-                    Image(
-                        painter = painterResource(id = R.drawable.no_image_placeholder),
-                        contentDescription = "Error loading image",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                },
-
-                contentScale = ContentScale.Crop
+                movieTitle = movie.title,
+                imageUrl = movie.image?.large
             )
 
             Box(
