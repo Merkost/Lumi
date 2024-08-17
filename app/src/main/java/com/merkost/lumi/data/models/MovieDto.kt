@@ -9,7 +9,7 @@ data class MovieDto(
     @SerialName("backdrop_path")
     val backdropPath: String? = null,
     @SerialName("genre_ids")
-    val genreIds: List<Int> = emptyList(),
+    val genreIds: List<Int>? = emptyList(),
     val id: Int = 0,
     @SerialName("original_language")
     val originalLanguage: String = "",
