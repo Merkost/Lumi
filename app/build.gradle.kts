@@ -56,12 +56,14 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.coil.compose)
+    implementation(libs.lottie.compose)
 
     implementation(libs.bundles.ktor)
     implementation(libs.bundles.coroutines)
 
     implementation(libs.kotlinx.serialization.json)
-
     implementation(libs.koin.androidx.compose)
 
     implementation(libs.androidx.core.ktx)
