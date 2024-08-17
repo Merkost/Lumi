@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Lumi</string>
+    <string name="title_popular_movies">Popular Movies</string>
+    <string name="btn_retry">Retry</string>
+
+    <string name="error_network">No Internet Connection. Please check your network and try again.</string>
+    <string name="error_unknown">Something went wrong. Please try again later.</string>
 </resources>
