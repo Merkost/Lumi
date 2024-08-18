@@ -4,19 +4,19 @@
 
 Lumi is an Android application designed to showcase popular movies and detailed movie information using the [TMDB API](https://developer.themoviedb.org/reference/movie-popular-list). 
 
-## 📱 Screenshots
+## Screenshots
 
 <p float="left">
   <img src="screenshots/popular_movies_screen.png" alt="Screenshot 1" width="150" />
   <img src="screenshots/movie_details_screen.png" alt="Screenshot 2" width="150" />
 </p>
 
-## 🚀 Features
+## Features
 
 - **Movie List Screen** displays a list of popular movies with their poster, title, and rating.
 - **Movie Details Screen** provides detailed information about a selected movie, including the background image, title, overview, runtime, and release date.
 
-## 📦 Project Structure
+## Project Structure
 
 ```
 - data/
@@ -39,7 +39,7 @@ Lumi is an Android application designed to showcase popular movies and detailed 
 - utils/          
 ```
 
-## 🏗️ Build Instructions
+## Build Instructions
 
 1. **Clone the repository**
    ```
