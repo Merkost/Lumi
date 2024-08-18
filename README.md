@@ -55,6 +55,8 @@ Lumi is an Android application designed to showcase popular movies and detailed 
    MOVIE_DB_AUTH_TOKEN=yout_api_token_here
    ```
 4. **Build the app with Android Studio**
+5. **Alternative**
 
+   You can download the APK from the [release section](https://github.com/Merkost/Lumi/releases) of the app’s GitHub page.
 
                        
