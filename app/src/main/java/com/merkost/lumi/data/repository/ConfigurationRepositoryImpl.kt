@@ -46,7 +46,6 @@ class ConfigurationRepositoryImpl(
     }
 
     override suspend fun getConfiguration(): ApiResult<ImagesConfiguration> {
-//        return ApiResult.Error(Exception("Test!"))
         val cachedConfig = getCachedConfig()
 
         val needsUpdate = needsConfigurationUpdate()

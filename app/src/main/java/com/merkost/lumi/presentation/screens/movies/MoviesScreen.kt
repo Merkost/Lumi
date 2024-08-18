@@ -105,7 +105,7 @@ fun MovieItem(movie: Movie, onMovieClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
+            .clip(MaterialTheme.shapes.large)
             .background(MaterialTheme.colorScheme.surface)
             .clickable { onMovieClick() }
     ) {
