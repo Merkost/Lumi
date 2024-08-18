@@ -7,6 +7,7 @@ import com.merkost.lumi.domain.models.Movie
 import com.merkost.lumi.domain.models.MovieDetails
 import com.merkost.lumi.utils.image.ImageType
 import com.merkost.lumi.utils.image.ImageUrlBuilder
+import java.time.LocalDate
 
 fun MovieDto.mapApiToDomain(config: ImagesConfiguration): Movie {
     return Movie(
@@ -23,6 +24,6 @@ fun MovieDetailsResponse.mapApiToDomain(config: ImagesConfiguration): MovieDetai
         overview = this.overview,
         runtime = this.runtime,
         backdropImage = ImageUrlBuilder(config).buildImage(ImageType.BACKDROP, this.backdropPath),
-        releaseDate = this.releaseDate,
+        releaseDate = LocalDate.parse(this.releaseDate),
     )
 }
