@@ -1,4 +1,4 @@
-# 🎬 Lumi - The Movie App
+# Lumi - The Movie App
 
 <img src="screenshots/ic_launcher-playstore.png" alt="Lumi Logo" width="150">
 
