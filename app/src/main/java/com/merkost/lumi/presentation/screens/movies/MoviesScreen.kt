@@ -2,7 +2,6 @@ package com.merkost.lumi.presentation.screens.movies
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,11 +15,10 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -28,7 +26,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
@@ -36,14 +33,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.merkost.lumi.R
 import com.merkost.lumi.domain.models.Movie
 import com.merkost.lumi.presentation.components.LumiTopAppBar
 import com.merkost.lumi.presentation.components.MovieImage
+import com.merkost.lumi.presentation.components.RatingBadge
 import com.merkost.lumi.presentation.components.ScreenStateHandler
 import com.merkost.lumi.presentation.viewmodels.MoviesViewModel
 import org.koin.androidx.compose.koinViewModel
+import shimmerEffect
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -77,7 +75,7 @@ fun MoviesScreen(
                 modifier = Modifier.padding(innerPadding),
                 onRetry = viewModel::retryLoadingMovies,
                 successContent = { data ->
-                    MovieGrid(data, onMovieClick)
+                    MovieGrid(data, onMovieClick = onMovieClick)
                 }
             )
         }
@@ -85,61 +83,48 @@ fun MoviesScreen(
 }
 
 @Composable
-fun MovieGrid(movies: List<Movie>, onMovieClick: (Movie) -> Unit) {
+fun MovieGrid(
+    movies: List<Movie>,
+    modifier: Modifier = Modifier,
+    onMovieClick: (Movie) -> Unit,
+) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize(),
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(movies, key = { it.id }) { movie ->
-            MovieItem(movie, onMovieClick = { onMovieClick(movie) })
+            MovieItem(modifier = Modifier, movie, onMovieClick = { onMovieClick(movie) })
         }
     }
 }
 
 @Composable
-fun MovieItem(movie: Movie, onMovieClick: () -> Unit) {
-    Box(
-        modifier = Modifier
+fun MovieItem(modifier: Modifier = Modifier, movie: Movie, onMovieClick: () -> Unit) {
+    Surface(
+        modifier = modifier
             .fillMaxWidth()
-            .clip(MaterialTheme.shapes.large)
-            .background(MaterialTheme.colorScheme.surface)
-            .clickable { onMovieClick() }
+            .height(320.dp),
+        onClick = onMovieClick,
+        shape = MaterialTheme.shapes.large,
     ) {
         Box {
-
             MovieImage(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(320.dp),
+                    .fillMaxSize(),
                 movieTitle = movie.title,
                 imageUrl = movie.image?.large
             )
 
-            Box(
-                contentAlignment = Alignment.Center,
+            RatingBadge(
                 modifier = Modifier
-                    .padding(4.dp)
-                    .size(32.dp)
-                    .clip(CircleShape)
-                    .background(
-                        color = movie.ratingColor
-                    )
-                    .align(Alignment.TopEnd)
-                    .padding(4.dp)
-            ) {
-                Text(
-                    text = movie.ratingText,
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp
-                    )
-                )
-            }
+                    .padding(8.dp)
+                    .align(Alignment.TopEnd),
+                rating = movie.averageRating,
+            )
 
             Box(
                 modifier = Modifier

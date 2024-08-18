@@ -9,8 +9,3 @@ val BrightYellow = Color(0xFFFFEB3B)
 val GoldenYellow = Color(0xFFFFF176)
 val DarkOrange = Color(0xFFF57C00)
 val DarkerOrange = Color(0xffa55100)
-
-val Brown = Color(0xFF8B4513)
-val Red = Color(0xFFF44336)
-val Orange = Color(0xFFFFA500)
-val Green = Color(0xFF4CAF50)
