@@ -6,13 +6,12 @@ import com.merkost.lumi.data.models.MovieDetailsResponse
 import com.merkost.lumi.data.models.MovieDto
 import com.merkost.lumi.data.models.MoviesResponse
 import com.merkost.lumi.data.repository.MovieRepositoryImpl
-import com.merkost.lumi.utils.ApiResult
+import com.merkost.lumi.presentation.base.ApiResult
 import com.merkost.lumi.utils.image.ImageUrlBuilder
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before

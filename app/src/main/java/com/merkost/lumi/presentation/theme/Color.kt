@@ -1,4 +1,4 @@
-package com.merkost.lumi.ui.theme
+package com.merkost.lumi.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

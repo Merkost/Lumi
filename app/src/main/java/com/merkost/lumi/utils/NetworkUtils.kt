@@ -2,6 +2,7 @@ package com.merkost.lumi.utils
 
 import android.util.Log
 import com.merkost.lumi.BuildConfig
+import com.merkost.lumi.presentation.base.ApiResult
 import java.io.IOException
 
 suspend fun <T> safeApiCall(apiCall: suspend () -> T): ApiResult<T> {

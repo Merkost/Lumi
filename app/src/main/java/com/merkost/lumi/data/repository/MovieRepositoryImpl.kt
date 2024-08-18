@@ -5,7 +5,7 @@ import com.merkost.lumi.data.mappers.mapApiToDomain
 import com.merkost.lumi.domain.models.Movie
 import com.merkost.lumi.domain.models.MovieDetails
 import com.merkost.lumi.domain.repositories.MovieRepository
-import com.merkost.lumi.utils.ApiResult
+import com.merkost.lumi.presentation.base.ApiResult
 import com.merkost.lumi.utils.safeApiCall
 
 class MovieRepositoryImpl(

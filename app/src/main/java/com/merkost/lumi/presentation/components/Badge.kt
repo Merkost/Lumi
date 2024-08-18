@@ -14,7 +14,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.merkost.lumi.utils.formatRating
 import com.merkost.lumi.utils.getColorByRating
 
@@ -26,17 +25,16 @@ fun RatingBadge(
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
-            .size(32.dp)
             .clip(CircleShape)
+            .size(36.dp)
             .background(getColorByRating(rating))
             .padding(4.dp)
     ) {
         Text(
             text = formatRating(rating),
-            style = MaterialTheme.typography.bodyMedium.copy(
-                color = Color.White,
+            style = MaterialTheme.typography.bodyLarge.copy(
                 fontWeight = FontWeight.Bold,
-                fontSize = 14.sp
+                color = Color.White,
             )
         )
     }

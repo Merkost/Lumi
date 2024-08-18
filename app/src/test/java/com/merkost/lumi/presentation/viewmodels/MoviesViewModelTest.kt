@@ -2,8 +2,8 @@ package com.merkost.lumi.presentation.viewmodels
 
 import com.merkost.lumi.domain.models.Movie
 import com.merkost.lumi.domain.repositories.MovieRepository
+import com.merkost.lumi.presentation.base.ApiResult
 import com.merkost.lumi.presentation.base.UiState
-import com.merkost.lumi.utils.ApiResult
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers

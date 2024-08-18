@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.merkost.lumi.presentation.screens.navigation.MainNavigation
-import com.merkost.lumi.ui.theme.LumiTheme
+import com.merkost.lumi.presentation.theme.LumiTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

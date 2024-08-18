@@ -135,9 +135,8 @@ fun MovieItem(modifier: Modifier = Modifier, movie: Movie, onMovieClick: () -> U
             ) {
                 Text(
                     text = movie.title,
-                    style = MaterialTheme.typography.titleMedium.copy(
+                    style = MaterialTheme.typography.titleSmall.copy(
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
                     ),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
