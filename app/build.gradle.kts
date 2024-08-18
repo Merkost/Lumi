@@ -60,11 +60,15 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.lottie.compose)
 
+    implementation(libs.androidx.material.icons.extended)
+
     implementation(libs.bundles.ktor)
     implementation(libs.bundles.coroutines)
 
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.koin.androidx.compose)
+
+    implementation(libs.navigation)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
