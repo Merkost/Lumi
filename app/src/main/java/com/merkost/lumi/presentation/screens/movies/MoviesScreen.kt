@@ -41,7 +41,6 @@ import com.merkost.lumi.presentation.components.RatingBadge
 import com.merkost.lumi.presentation.components.ScreenStateHandler
 import com.merkost.lumi.presentation.viewmodels.MoviesViewModel
 import org.koin.androidx.compose.koinViewModel
-import shimmerEffect
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

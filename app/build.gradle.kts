@@ -22,6 +22,7 @@ android {
 
     defaultConfig {
         applicationId = "com.merkost.lumi"
+        testApplicationId = "com.merkost.lumi"
         minSdk = 29
         targetSdk = 35
         versionCode = 1
@@ -85,4 +86,8 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    testImplementation("io.mockk:mockk:1.13.12")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+    testImplementation("org.assertj:assertj-core:3.21.0")
 }

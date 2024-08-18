@@ -7,34 +7,34 @@ import kotlinx.serialization.Serializable
 data class MovieDetailsResponse(
     val adult: Boolean = true,
     @SerialName("backdrop_path")
-    val backdropPath: String?,
+    val backdropPath: String? = null,
     val budget: Int = 0,
     val genres: List<Genre> = emptyList(),
-    val homepage: String?,
+    val homepage: String? = null,
     val id: Int = 0,
     @SerialName("imdb_id")
-    val imdbId: String?,
+    val imdbId: String? = null,
     @SerialName("original_language")
-    val originalLanguage: String?,
+    val originalLanguage: String? = null,
     @SerialName("original_title")
-    val originalTitle: String?,
-    val overview: String?,
+    val originalTitle: String? = null,
+    val overview: String? = null,
     val popularity: Double = 0.0,
     @SerialName("poster_path")
-    val posterPath: String?,
+    val posterPath: String? = null,
     @SerialName("production_companies")
     val productionCompanies: List<ProductionCompany> = emptyList(),
     @SerialName("production_countries")
     val productionCountries: List<ProductionCountry> = emptyList(),
-    @SerialName("release_date") val
-    releaseDate: String?,
+    @SerialName("release_date")
+    val releaseDate: String? = null,
     val revenue: Int = 0,
     val runtime: Int = 0,
     @SerialName("spoken_languages")
     val spokenLanguages: List<SpokenLanguage> = emptyList(),
-    val status: String?,
-    val tagline: String?,
-    val title: String?,
+    val status: String? = null,
+    val tagline: String? = null,
+    val title: String? = null,
     val video: Boolean = true,
     @SerialName("vote_average")
     val voteAverage: Double = 0.0,
