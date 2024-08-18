@@ -95,7 +95,7 @@ fun MovieDetailsContent(
     Box(modifier = modifier.fillMaxSize()) {
 
         MovieImage(
-            imageUrl = movie.backdropImage?.original,
+            imageUrl = movie.backdropImage?.medium,
             movieTitle = movie.title ?: "",
             modifier = Modifier
                 .fillMaxWidth()
