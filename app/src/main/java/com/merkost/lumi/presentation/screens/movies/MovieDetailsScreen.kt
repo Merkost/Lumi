@@ -1,5 +1,4 @@
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccessTime
@@ -27,9 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -43,6 +41,7 @@ import com.merkost.lumi.presentation.components.IconedText
 import com.merkost.lumi.presentation.components.MovieImage
 import com.merkost.lumi.presentation.components.ScreenStateHandler
 import com.merkost.lumi.presentation.components.TransparentBackButton
+import com.merkost.lumi.presentation.components.noRippleClickable
 import com.merkost.lumi.presentation.viewmodels.MovieDetailsViewModel
 import com.merkost.lumi.utils.formatMovieDuration
 import org.koin.androidx.compose.koinViewModel
@@ -94,40 +93,35 @@ fun MovieDetailsContent(
     modifier: Modifier = Modifier,
     movie: MovieDetails
 ) {
-    Box(modifier = modifier.fillMaxSize()) {
+    val screenHeight = LocalConfiguration.current.screenHeightDp.dp
+    val backdropImageHeight = remember { screenHeight / 3 }
+
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.TopCenter
+    ) {
 
         MovieImage(
             imageUrl = movie.backdropImage?.medium,
             movieTitle = movie.title ?: "",
             modifier = Modifier
                 .fillMaxWidth()
-                .height(450.dp)
-        )
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 350.dp)
-                .height(100.dp)
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(Color.Transparent, MaterialTheme.colorScheme.background),
-                        startY = 100f
-                    )
-                )
+                .height(backdropImageHeight)
         )
 
         Surface(
             modifier = Modifier
-                .padding(top = 450.dp)
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .padding(16.dp)
-                .clip(MaterialTheme.shapes.large)
-                .verticalScroll(rememberScrollState()),
+                .padding(top = backdropImageHeight - 20.dp)
+                .fillMaxSize()
+                .align(Alignment.BottomCenter),
+            shape = MaterialTheme.shapes.large.copy(
+                bottomEnd = CornerSize(0.dp),
+                bottomStart = CornerSize(0.dp)
+            )
         ) {
             Column(
                 modifier = Modifier
+                    .verticalScroll(rememberScrollState())
                     .padding(16.dp)
                     .fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
