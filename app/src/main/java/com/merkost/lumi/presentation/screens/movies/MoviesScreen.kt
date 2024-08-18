@@ -88,7 +88,7 @@ fun MovieGrid(
     onMovieClick: (Movie) -> Unit,
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Adaptive(150.dp),
         modifier = modifier
             .fillMaxSize(),
         contentPadding = PaddingValues(16.dp),
