@@ -46,12 +46,14 @@ import com.merkost.lumi.presentation.components.TransparentBackButton
 import com.merkost.lumi.presentation.viewmodels.MovieDetailsViewModel
 import com.merkost.lumi.utils.formatMovieDuration
 import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 import java.time.LocalDate
 
 @Composable
 fun MovieDetailsScreen(
     modifier: Modifier = Modifier,
-    viewModel: MovieDetailsViewModel = koinViewModel(),
+    movieId: Int,
+    viewModel: MovieDetailsViewModel = koinViewModel(parameters = { parametersOf(movieId) }),
     onBackPress: () -> Unit
 ) {
     val screenState by viewModel.screenState.collectAsState()
@@ -99,13 +101,14 @@ fun MovieDetailsContent(
             movieTitle = movie.title ?: "",
             modifier = Modifier
                 .fillMaxWidth()
-                .height(350.dp)
+                .height(450.dp)
         )
 
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(350.dp)
+                .padding(top = 350.dp)
+                .height(100.dp)
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(Color.Transparent, MaterialTheme.colorScheme.background),
@@ -116,14 +119,12 @@ fun MovieDetailsContent(
 
         Surface(
             modifier = Modifier
-                .padding(top = 350.dp)
+                .padding(top = 450.dp)
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
                 .padding(16.dp)
                 .clip(MaterialTheme.shapes.large)
                 .verticalScroll(rememberScrollState()),
-            color = MaterialTheme.colorScheme.surface,
-            shadowElevation = 8.dp
         ) {
             Column(
                 modifier = Modifier
