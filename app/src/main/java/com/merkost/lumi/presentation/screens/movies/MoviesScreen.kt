@@ -1,8 +1,8 @@
 package com.merkost.lumi.presentation.screens.movies
 
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -39,16 +39,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.merkost.lumi.R
 import com.merkost.lumi.domain.models.Movie
-import com.merkost.lumi.presentation.components.ErrorView
-import com.merkost.lumi.presentation.components.LottieLoading
 import com.merkost.lumi.presentation.components.LumiTopAppBar
-import com.merkost.lumi.presentation.components.MoviePoster
+import com.merkost.lumi.presentation.components.MovieImage
+import com.merkost.lumi.presentation.components.ScreenStateHandler
 import com.merkost.lumi.presentation.viewmodels.MoviesViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MoviesScreen(viewModel: MoviesViewModel = koinViewModel()) {
+fun MoviesScreen(
+    viewModel: MoviesViewModel = koinViewModel(),
+    onMovieClick: (Movie) -> Unit
+) {
     val screenState by viewModel.screenState.collectAsState()
     val scrollBehaviour = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Scaffold(
@@ -62,50 +64,28 @@ fun MoviesScreen(viewModel: MoviesViewModel = koinViewModel()) {
                     Image(
                         painter = painterResource(id = R.drawable.ic_launcher_foreground),
                         contentDescription = "App logo",
-                        modifier = Modifier.size(48.dp)
+                        modifier = Modifier
+                            .size(64.dp)
+                            .fillMaxSize()
                     )
                 }
             )
         },
         content = { innerPadding ->
-            Box(
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.background)
-            ) {
-                AnimatedContent(screenState, label = "moviesScreenStateAnim") { state ->
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        when (state) {
-                            is MovieScreenState.Loading -> {
-                                LottieLoading(
-                                    modifier = Modifier.size(226.dp),
-                                    resId = R.raw.popcorn_loading
-                                )
-                            }
-
-                            is MovieScreenState.Error -> {
-                                ErrorView(
-                                    message = stringResource(state.messageRes),
-                                    onRetry = {
-                                        viewModel.retryLoadingMovies()
-                                    }
-                                )
-                            }
-
-                            is MovieScreenState.Success -> {
-                                MovieGrid(state.movies)
-                            }
-                        }
-                    }
+            ScreenStateHandler(
+                screenState,
+                modifier = Modifier.padding(innerPadding),
+                onRetry = viewModel::retryLoadingMovies,
+                successContent = { data ->
+                    MovieGrid(data, onMovieClick)
                 }
-            }
+            )
         }
     )
 }
 
 @Composable
-fun MovieGrid(movies: List<Movie>) {
+fun MovieGrid(movies: List<Movie>, onMovieClick: (Movie) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier
@@ -115,25 +95,26 @@ fun MovieGrid(movies: List<Movie>) {
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(movies, key = { it.id }) { movie ->
-            MovieItem(movie)
+            MovieItem(movie, onMovieClick = { onMovieClick(movie) })
         }
     }
 }
 
 @Composable
-fun MovieItem(movie: Movie) {
+fun MovieItem(movie: Movie, onMovieClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
             .background(MaterialTheme.colorScheme.surface)
+            .clickable { onMovieClick() }
     ) {
         Box {
 
-            MoviePoster(
+            MovieImage(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(240.dp),
+                    .height(320.dp),
                 movieTitle = movie.title,
                 imageUrl = movie.image?.large
             )

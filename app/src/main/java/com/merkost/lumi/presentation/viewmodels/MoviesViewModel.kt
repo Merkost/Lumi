@@ -1,20 +1,20 @@
 package com.merkost.lumi.presentation.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.merkost.lumi.domain.models.Movie
 import com.merkost.lumi.domain.repositories.MovieRepository
-import com.merkost.lumi.presentation.screens.movies.MovieScreenState
+import com.merkost.lumi.presentation.base.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class MoviesViewModel(
     private val movieRepository: MovieRepository
 ) : ViewModel() {
 
-    private val _screenState = MutableStateFlow<MovieScreenState>(MovieScreenState.Loading)
-    val screenState: StateFlow<MovieScreenState> = _screenState
+    private val _screenState = MutableStateFlow<UiState<List<Movie>>>(UiState.Loading)
+    val screenState = _screenState.asStateFlow()
 
     init {
         fetchMovies()
@@ -22,14 +22,14 @@ class MoviesViewModel(
 
     private fun fetchMovies() {
         viewModelScope.launch {
-            _screenState.value = MovieScreenState.Loading
+            _screenState.value = UiState.Loading
             movieRepository.getPopularMovies()
                 .fold(
                     onSuccess = { movies ->
-                        _screenState.value = MovieScreenState.Success(movies)
+                        _screenState.value = UiState.Success(movies)
                     },
                     onError = { e ->
-                        _screenState.value = MovieScreenState.Error(e.infoResource)
+                        _screenState.value = e.toUiState()
                     }
                 )
         }
