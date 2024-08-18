@@ -5,4 +5,8 @@
 
     <string name="error_network">No Internet Connection. Please check your network and try again.</string>
     <string name="error_unknown">Something went wrong. Please try again later.</string>
+    <string name="back">Back</string>
+    <string name="unknown_title">Unknown Title</string>
+    <string name="show_less">Show Less</string>
+    <string name="show_more">Show More</string>
 </resources>
