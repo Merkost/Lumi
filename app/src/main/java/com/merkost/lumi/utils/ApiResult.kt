@@ -1,10 +1,18 @@
 package com.merkost.lumi.utils
 
 import com.merkost.lumi.R
+import com.merkost.lumi.presentation.base.UiState
 
 sealed class ApiResult<out T> {
     data class Success<T>(val data: T) : ApiResult<T>()
     sealed class Error(val exception: Throwable) : ApiResult<Nothing>() {
+
+        fun <T> toUiState(): UiState<T> {
+            return UiState.Error(
+                message = exception.message.orEmpty(),
+                messageRes = infoResource,
+            )
+        }
 
         companion object {
             fun fromThrowable(exception: Throwable): Error {

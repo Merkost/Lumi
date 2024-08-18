@@ -12,7 +12,7 @@ import coil.request.ImageRequest
 import com.merkost.lumi.R
 
 @Composable
-fun MoviePoster(
+fun MovieImage(
     modifier: Modifier = Modifier,
     imageUrl: String?,
     movieTitle: String,

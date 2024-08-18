@@ -8,7 +8,8 @@ object ConfigurationMapper {
         return ImagesConfiguration(
             baseUrl = imagesConfig.baseUrl,
             secureBaseUrl = imagesConfig.secureBaseUrl,
-            posterSizes = imagesConfig.posterSizes
+            posterSizes = imagesConfig.posterSizes,
+            backdropSizes = imagesConfig.backdropSizes
         )
     }
 }

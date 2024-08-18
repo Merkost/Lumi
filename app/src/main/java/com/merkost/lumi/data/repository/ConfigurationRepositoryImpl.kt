@@ -27,6 +27,7 @@ class ConfigurationRepositoryImpl(
         val BASE_URL = stringPreferencesKey("base_url")
         val SECURE_BASE_URL = stringPreferencesKey("secure_base_url")
         val POSTER_SIZES = stringSetPreferencesKey("poster_sizes")
+        val BACKDROP_SIZES = stringSetPreferencesKey("backdrop_sizes")
         val LAST_UPDATE_TIME = longPreferencesKey("last_update_time")
     }
 
@@ -69,7 +70,14 @@ class ConfigurationRepositoryImpl(
         val baseUrl = preferences[DataStoreKeys.BASE_URL] ?: return null
         val secureBaseUrl = preferences[DataStoreKeys.SECURE_BASE_URL] ?: return null
         val posterSizes = preferences[DataStoreKeys.POSTER_SIZES]?.toList() ?: return null
-        return ImagesConfiguration(baseUrl, secureBaseUrl, posterSizes)
+        val backdropSizes = preferences[DataStoreKeys.BACKDROP_SIZES]?.toList() ?: return null
+
+        return ImagesConfiguration(
+            baseUrl = baseUrl,
+            secureBaseUrl = secureBaseUrl,
+            posterSizes = posterSizes,
+            backdropSizes = backdropSizes
+        )
     }
 
     private suspend fun cacheConfig(config: ImagesConfiguration) {
@@ -77,6 +85,7 @@ class ConfigurationRepositoryImpl(
             preferences[DataStoreKeys.BASE_URL] = config.baseUrl
             preferences[DataStoreKeys.SECURE_BASE_URL] = config.secureBaseUrl
             preferences[DataStoreKeys.POSTER_SIZES] = config.posterSizes.toSet()
+            preferences[DataStoreKeys.BACKDROP_SIZES] = config.backdropSizes.toSet()
             preferences[DataStoreKeys.LAST_UPDATE_TIME] = System.currentTimeMillis()
 
         }

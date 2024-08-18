@@ -8,14 +8,14 @@ class ImageUrlBuilder(
     private val configuration: ImagesConfiguration
 ) {
 
-    fun buildImage(imageType: ImageType, posterPath: String?): Image? {
-        if (posterPath == null) return null
+    fun buildImage(imageType: ImageType, imagePath: String?): Image? {
+        if (imagePath == null) return null
 
         return kotlin.runCatching {
-            val smallImage = buildImageUrl(imageType, posterPath, ImageSizeType.SMALL)
-            val mediumImage = buildImageUrl(imageType, posterPath, ImageSizeType.MEDIUM)
-            val largeImage = buildImageUrl(imageType, posterPath, ImageSizeType.LARGE)
-            val originalImage = buildImageUrl(imageType, posterPath, ImageSizeType.ORIGINAL)
+            val smallImage = buildImageUrl(imageType, imagePath, ImageSizeType.SMALL)
+            val mediumImage = buildImageUrl(imageType, imagePath, ImageSizeType.MEDIUM)
+            val largeImage = buildImageUrl(imageType, imagePath, ImageSizeType.LARGE)
+            val originalImage = buildImageUrl(imageType, imagePath, ImageSizeType.ORIGINAL)
 
             Image(
                 small = smallImage,
@@ -28,9 +28,14 @@ class ImageUrlBuilder(
         }.getOrNull()
     }
 
-    private fun buildImageUrl(imageType: ImageType, posterPath: String, sizeType: ImageSizeType): String {
+    private fun buildImageUrl(
+        imageType: ImageType,
+        posterPath: String,
+        sizeType: ImageSizeType
+    ): String {
         val availableSizes = when (imageType) {
             ImageType.POSTER -> configuration.posterSizes
+            ImageType.BACKDROP -> configuration.backdropSizes
         }
 
         val size = getAvailableSize(availableSizes, sizeType)
@@ -41,7 +46,7 @@ class ImageUrlBuilder(
         return when (sizeType) {
             ImageSizeType.SMALL -> sizes.first()
             ImageSizeType.MEDIUM -> sizes.getOrNull(2) ?: sizes.first()
-            ImageSizeType.LARGE -> sizes.getOrNull(4) ?: sizes.first()
+            ImageSizeType.LARGE -> sizes.getOrNull(4) ?: sizes.last()
             ImageSizeType.ORIGINAL -> sizes.last()
         }
     }
