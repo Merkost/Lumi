@@ -10,10 +10,9 @@ val Orange = Color(0xFFFF9800)
 val Green = Color(0xFF4CAF50)
 
 fun getColorByRating(rating: Double): Color {
-    val maxRating = 10.0
-    val normalizedRating = (rating / maxRating).toFloat()
+    val normalizedRating = rating.coerceIn(0.0, 10.0).toFloat() / 10f
     return when {
-        rating <= 4 -> lerp(Brown, Red, normalizedRating / 4f)
+        rating <= 4 -> lerp(Brown, Red, normalizedRating / 0.4f)
         rating <= 6 -> lerp(Red, Orange, (normalizedRating - 0.4f) / 0.2f)
         rating <= 8 -> lerp(Orange, Green, (normalizedRating - 0.6f) / 0.2f)
         else -> Green
