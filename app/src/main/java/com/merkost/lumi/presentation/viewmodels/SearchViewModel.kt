@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.merkost.lumi.domain.models.Movie
 import com.merkost.lumi.domain.repositories.MovieRepository
-import com.merkost.lumi.presentation.base.UiState
+import com.merkost.lumi.presentation.base.SearchUiState
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +20,7 @@ class SearchViewModel(
     private val _searchQuery = MutableStateFlow("")
     val searchQuery = _searchQuery.asStateFlow()
 
-    private val _searchResults = MutableStateFlow<UiState<List<Movie>>>(UiState.Idle)
+    private val _searchResults = MutableStateFlow<SearchUiState<List<Movie>>>(SearchUiState.Idle)
     val searchResults = _searchResults.asStateFlow()
 
     init {
@@ -30,7 +30,7 @@ class SearchViewModel(
                 .distinctUntilChanged()
                 .collect { query ->
                     if (query.isBlank()) {
-                        _searchResults.value = UiState.Idle
+                        _searchResults.value = SearchUiState.Idle
                     } else {
                         searchMovies(query)
                     }
@@ -44,17 +44,20 @@ class SearchViewModel(
 
     private fun searchMovies(query: String) {
         viewModelScope.launch {
-            _searchResults.value = UiState.Loading
+            _searchResults.value = SearchUiState.Loading
             movieRepository.searchMovies(query).fold(
                 onSuccess = { movies ->
                     _searchResults.value = if (movies.isEmpty()) {
-                        UiState.Empty
+                        SearchUiState.Empty
                     } else {
-                        UiState.Success(movies)
+                        SearchUiState.Success(movies)
                     }
                 },
                 onError = { error ->
-                    _searchResults.value = error.toUiState()
+                    _searchResults.value = SearchUiState.Error(
+                        message = error.message,
+                        messageRes = error.messageRes
+                    )
                 }
             )
         }

@@ -34,7 +34,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.merkost.lumi.R
 import com.merkost.lumi.domain.models.Movie
-import com.merkost.lumi.presentation.base.UiState
+import com.merkost.lumi.presentation.base.SearchUiState
 import com.merkost.lumi.presentation.components.ErrorView
 import com.merkost.lumi.presentation.components.LoadingAnimation
 import com.merkost.lumi.presentation.screens.movies.MovieGrid
@@ -85,19 +85,19 @@ fun SearchScreen(
                 )
 
                 when (val state = searchResults) {
-                    is UiState.Idle -> {
+                    is SearchUiState.Idle -> {
                         EmptySearchState(stringResource(R.string.empty_search))
                     }
 
-                    is UiState.Loading -> {
+                    is SearchUiState.Loading -> {
                         LoadingAnimation(modifier = Modifier.fillMaxSize())
                     }
 
-                    is UiState.Empty -> {
+                    is SearchUiState.Empty -> {
                         EmptySearchState(stringResource(R.string.error_no_results))
                     }
 
-                    is UiState.Success -> {
+                    is SearchUiState.Success -> {
                         MovieGrid(
                             movies = state.data,
                             modifier = Modifier.fillMaxSize(),
@@ -105,7 +105,7 @@ fun SearchScreen(
                         )
                     }
 
-                    is UiState.Error -> {
+                    is SearchUiState.Error -> {
                         ErrorView(
                             message = state.message,
                             onRetry = viewModel::retrySearch,
