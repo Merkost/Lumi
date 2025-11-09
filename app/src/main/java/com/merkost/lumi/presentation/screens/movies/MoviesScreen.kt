@@ -15,7 +15,17 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.PlaylistPlay
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -24,6 +34,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -46,10 +59,16 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun MoviesScreen(
     viewModel: MoviesViewModel = koinViewModel(),
-    onMovieClick: (Movie) -> Unit
+    onMovieClick: (Movie) -> Unit,
+    onSearchClick: () -> Unit = {},
+    onFavoritesClick: () -> Unit = {},
+    onWatchedClick: () -> Unit = {},
+    onToWatchClick: () -> Unit = {}
 ) {
     val screenState by viewModel.screenState.collectAsState()
     val scrollBehaviour = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    var showMenu by remember { mutableStateOf(false) }
+
     Scaffold(
         contentWindowInsets = WindowInsets.statusBars,
         modifier = Modifier.nestedScroll(scrollBehaviour.nestedScrollConnection),
@@ -65,6 +84,66 @@ fun MoviesScreen(
                             .size(64.dp)
                             .fillMaxSize()
                     )
+                },
+                actions = {
+                    IconButton(onClick = onSearchClick) {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = stringResource(R.string.search)
+                        )
+                    }
+                    Box {
+                        IconButton(onClick = { showMenu = true }) {
+                            Icon(
+                                imageVector = Icons.Default.MoreVert,
+                                contentDescription = "More options"
+                            )
+                        }
+                        DropdownMenu(
+                            expanded = showMenu,
+                            onDismissRequest = { showMenu = false }
+                        ) {
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.title_favorites)) },
+                                onClick = {
+                                    showMenu = false
+                                    onFavoritesClick()
+                                },
+                                leadingIcon = {
+                                    Icon(
+                                        imageVector = Icons.Default.Favorite,
+                                        contentDescription = null
+                                    )
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.title_watched)) },
+                                onClick = {
+                                    showMenu = false
+                                    onWatchedClick()
+                                },
+                                leadingIcon = {
+                                    Icon(
+                                        imageVector = Icons.Default.Visibility,
+                                        contentDescription = null
+                                    )
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.title_to_watch)) },
+                                onClick = {
+                                    showMenu = false
+                                    onToWatchClick()
+                                },
+                                leadingIcon = {
+                                    Icon(
+                                        imageVector = Icons.Default.PlaylistPlay,
+                                        contentDescription = null
+                                    )
+                                }
+                            )
+                        }
+                    }
                 }
             )
         },
