@@ -101,7 +101,7 @@ fun MovieDetailsContent(
     ) {
 
         MovieImage(
-            imageUrl = movie.backdropImage?.medium,
+            imageUrl = movie.backdropImage?.original,
             movieTitle = movie.title ?: "",
             modifier = Modifier
                 .fillMaxWidth()

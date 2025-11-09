@@ -115,7 +115,7 @@ fun MovieItem(modifier: Modifier = Modifier, movie: Movie, onMovieClick: () -> U
                 modifier = Modifier
                     .fillMaxSize(),
                 movieTitle = movie.title,
-                imageUrl = movie.image?.medium
+                imageUrl = movie.image?.large
             )
 
             RatingBadge(
