@@ -25,4 +25,12 @@ class MovieRepositoryImpl(
                 .mapApiToDomain()
         }
     }
+
+    override suspend fun searchMovies(query: String): ApiResult<List<Movie>> {
+        return safeApiCall {
+            movieDbApi.searchMovies(query)
+                .results
+                .map { it.mapApiToDomain() }
+        }
+    }
 }
