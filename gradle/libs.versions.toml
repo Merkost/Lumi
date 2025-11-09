@@ -16,7 +16,7 @@ activityCompose = "1.11.0"
 composeBom = "2025.11.00"
 lottieCompose = "6.7.1"
 materialIconsExtended = "1.7.8"
-navigation = "2.9.0"
+navigation = "3.0.4"
 room = "2.8.3"
 ksp = "2.3.0"
 
