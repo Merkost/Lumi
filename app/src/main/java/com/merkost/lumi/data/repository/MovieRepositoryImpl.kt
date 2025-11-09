@@ -7,6 +7,7 @@ import com.merkost.lumi.domain.models.MovieDetails
 import com.merkost.lumi.domain.repositories.ConfigurationRepository
 import com.merkost.lumi.domain.repositories.MovieRepository
 import com.merkost.lumi.presentation.base.ApiResult
+import com.merkost.lumi.presentation.base.getOrNull
 import com.merkost.lumi.utils.safeApiCall
 
 class MovieRepositoryImpl(
@@ -41,10 +42,12 @@ class MovieRepositoryImpl(
     }
 
     override suspend fun searchMovies(query: String): ApiResult<List<Movie>> {
+        val configResult = configurationRepository.getConfiguration().getOrNull()
+            ?: return ApiResult.error("Failed to get configuration")
         return safeApiCall {
             movieDbApi.searchMovies(query)
                 .results
-                .map { it.mapApiToDomain() }
+                .map { it.mapApiToDomain(configResult) }
         }
     }
 }

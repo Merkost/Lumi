@@ -1,7 +1,7 @@
 package com.merkost.lumi.domain.repositories
 
 import com.merkost.lumi.domain.models.ImagesConfiguration
-import com.merkost.lumi.utils.ApiResult
+import com.merkost.lumi.presentation.base.ApiResult
 
 interface ConfigurationRepository {
     suspend fun getConfiguration(): ApiResult<ImagesConfiguration>

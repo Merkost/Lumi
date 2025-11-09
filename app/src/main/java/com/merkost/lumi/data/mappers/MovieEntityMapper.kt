@@ -1,7 +1,6 @@
 package com.merkost.lumi.data.mappers
 
 import com.merkost.lumi.data.local.entities.MovieEntity
-import com.merkost.lumi.domain.models.Image
 import com.merkost.lumi.domain.models.Movie
 
 fun MovieEntity.toDomain(): Movie {
@@ -9,7 +8,7 @@ fun MovieEntity.toDomain(): Movie {
         id = id,
         title = title,
         averageRating = averageRating,
-        image = posterPath?.let { Image(it) }
+        imagePath = posterPath
     )
 }
 
@@ -25,7 +24,7 @@ fun Movie.toEntity(
         id = id,
         title = title,
         averageRating = averageRating,
-        posterPath = image?.url,
+        posterPath = imagePath,
         backdropPath = backdropPath,
         overview = overview,
         releaseDate = releaseDate,

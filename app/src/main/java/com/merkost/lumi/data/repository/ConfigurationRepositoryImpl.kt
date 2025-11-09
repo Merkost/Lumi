@@ -11,7 +11,7 @@ import com.merkost.lumi.data.api.ConfigurationApi
 import com.merkost.lumi.data.mappers.ConfigurationMapper
 import com.merkost.lumi.domain.models.ImagesConfiguration
 import com.merkost.lumi.domain.repositories.ConfigurationRepository
-import com.merkost.lumi.utils.ApiResult
+import com.merkost.lumi.presentation.base.ApiResult
 import com.merkost.lumi.utils.Constants
 import com.merkost.lumi.utils.safeApiCall
 import kotlinx.coroutines.flow.first

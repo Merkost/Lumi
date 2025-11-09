@@ -14,7 +14,7 @@ fun MovieDto.mapApiToDomain(config: ImagesConfiguration): Movie {
         id = this.id,
         title = this.title,
         averageRating = this.voteAverage,
-        image = ImageUrlBuilder(config).buildImage(ImageType.POSTER, this.posterPath),
+        imagePath = ImageUrlBuilder(config).buildImage(ImageType.POSTER, this.posterPath)?.large,
     )
 }
 

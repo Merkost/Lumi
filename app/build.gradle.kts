@@ -19,13 +19,13 @@ val movieDbToken: String = localProperties.getProperty("MOVIE_DB_AUTH_TOKEN")
 
 android {
     namespace = "com.merkost.lumi"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.merkost.lumi"
         testApplicationId = "com.merkost.lumi"
         minSdk = 29
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 

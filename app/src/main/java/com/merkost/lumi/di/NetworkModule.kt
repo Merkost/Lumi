@@ -61,29 +61,29 @@ internal val DefaultOkHttp = HttpClient(Android) {
                 ignoreUnknownKeys = true
             }
         )
+    }
 
-        install(Logging) {
-            logger = object : Logger {
-                override fun log(message: String) {
-                    Log.d("Http Ktor Logging ->", message)
-                }
-            }
-            level = if (BuildConfig.DEBUG) LogLevel.ALL else LogLevel.NONE
-        }
-
-        install(ResponseObserver) {
-            onResponse { response ->
-                Log.d("HTTP status:", "${response.status.value}")
+    install(Logging) {
+        logger = object : Logger {
+            override fun log(message: String) {
+                Log.d("Http Ktor Logging ->", message)
             }
         }
+        level = if (BuildConfig.DEBUG) LogLevel.ALL else LogLevel.NONE
+    }
 
-        install(HttpTimeout) {
-            connectTimeoutMillis = TIME_OUT
-            socketTimeoutMillis = TIME_OUT
+    install(ResponseObserver) {
+        onResponse { response ->
+            Log.d("HTTP status:", "${response.status.value}")
         }
+    }
 
-        install(DefaultRequest) {
-            header(HttpHeaders.ContentType, ContentType.Application.Json)
-        }
+    install(HttpTimeout) {
+        connectTimeoutMillis = TIME_OUT
+        socketTimeoutMillis = TIME_OUT
+    }
+
+    install(DefaultRequest) {
+        header(HttpHeaders.ContentType, ContentType.Application.Json)
     }
 }
