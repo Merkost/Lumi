@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -203,6 +204,39 @@ fun MovieItem(modifier: Modifier = Modifier, movie: Movie, onMovieClick: () -> U
                     .align(Alignment.TopEnd),
                 rating = movie.averageRating,
             )
+
+            // State indicators (favorite, watched, to-watch)
+            Row(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .align(Alignment.TopStart),
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                if (movie.isFavorite) {
+                    Icon(
+                        imageVector = Icons.Default.Favorite,
+                        contentDescription = "Favorite",
+                        modifier = Modifier.size(20.dp),
+                        tint = MaterialTheme.colorScheme.error
+                    )
+                }
+                if (movie.isWatched) {
+                    Icon(
+                        imageVector = Icons.Default.Visibility,
+                        contentDescription = "Watched",
+                        modifier = Modifier.size(20.dp),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+                if (movie.isToWatch) {
+                    Icon(
+                        imageVector = Icons.Default.PlaylistPlay,
+                        contentDescription = "To Watch",
+                        modifier = Modifier.size(20.dp),
+                        tint = MaterialTheme.colorScheme.tertiary
+                    )
+                }
+            }
 
             Box(
                 modifier = Modifier

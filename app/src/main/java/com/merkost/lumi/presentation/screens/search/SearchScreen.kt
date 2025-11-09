@@ -21,7 +21,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -37,6 +36,7 @@ import com.merkost.lumi.domain.models.Movie
 import com.merkost.lumi.presentation.base.SearchUiState
 import com.merkost.lumi.presentation.components.ErrorView
 import com.merkost.lumi.presentation.components.LoadingAnimation
+import com.merkost.lumi.presentation.components.LumiTopAppBar
 import com.merkost.lumi.presentation.screens.movies.MovieGrid
 import com.merkost.lumi.presentation.viewmodels.SearchViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -55,8 +55,8 @@ fun SearchScreen(
     Scaffold(
         contentWindowInsets = WindowInsets.statusBars,
         topBar = {
-            TopAppBar(
-                title = {},
+            LumiTopAppBar(
+                title = stringResource(R.string.search),
                 navigationIcon = {
                     IconButton(onClick = onBackPress) {
                         Icon(
@@ -64,7 +64,7 @@ fun SearchScreen(
                             contentDescription = stringResource(R.string.back)
                         )
                     }
-                },
+                }
             )
         },
         content = { innerPadding ->

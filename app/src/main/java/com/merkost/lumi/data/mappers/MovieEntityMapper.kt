@@ -8,17 +8,17 @@ fun MovieEntity.toDomain(): Movie {
         id = id,
         title = title,
         averageRating = averageRating,
-        imagePath = posterPath
+        imagePath = posterPath,
+        isFavorite = isFavorite,
+        isWatched = isWatched,
+        isToWatch = isToWatch
     )
 }
 
 fun Movie.toEntity(
     overview: String? = null,
     releaseDate: String? = null,
-    backdropPath: String? = null,
-    isFavorite: Boolean = false,
-    isWatched: Boolean = false,
-    isToWatch: Boolean = false
+    backdropPath: String? = null
 ): MovieEntity {
     return MovieEntity(
         id = id,

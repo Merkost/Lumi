@@ -37,10 +37,10 @@ class MovieDetailsViewModel(
     private fun observeMovieStatus() {
         viewModelScope.launch {
             localMovieRepository.getMovieByIdFlow(movieId).collect { movie ->
-                movie?.let {
-                    // Check movie status in database
-                    // Note: We need to add these flags to MovieEntity
-                    // For now, we'll just set them to false
+                if (movie != null) {
+                    _isFavorite.value = movie.isFavorite
+                    _isWatched.value = movie.isWatched
+                    _isToWatch.value = movie.isToWatch
                 }
             }
         }

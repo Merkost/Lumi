@@ -5,4 +5,7 @@ data class Movie(
     val title: String = "",
     val averageRating: Double = 0.0,
     val imagePath: String?,
+    val isFavorite: Boolean = false,
+    val isWatched: Boolean = false,
+    val isToWatch: Boolean = false
 )
