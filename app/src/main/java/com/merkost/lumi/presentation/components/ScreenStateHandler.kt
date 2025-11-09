@@ -53,6 +53,7 @@ fun <T> ScreenStateHandler(
                 is UiState.Success -> {
                     successContent(state.data)
                 }
+
             }
         }
     }

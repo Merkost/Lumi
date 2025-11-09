@@ -2,6 +2,7 @@ package com.merkost.lumi.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.merkost.lumi.R
 import com.merkost.lumi.domain.models.Movie
 import com.merkost.lumi.domain.repositories.MovieRepository
 import com.merkost.lumi.presentation.base.SearchUiState
@@ -55,8 +56,9 @@ class SearchViewModel(
                 },
                 onError = { error ->
                     _searchResults.value = SearchUiState.Error(
-                        message = error.message,
-                        messageRes = error.messageRes
+                        message = error.exception.message.orEmpty(),
+                        messageRes = R.string.error_unknown
+
                     )
                 }
             )

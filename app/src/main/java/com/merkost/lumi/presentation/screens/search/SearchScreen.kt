@@ -118,6 +118,8 @@ fun SearchScreen(
     )
 }
 
+
+
 @Composable
 private fun SearchBar(
     query: String,
