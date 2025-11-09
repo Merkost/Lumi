@@ -53,36 +53,43 @@ The project follows a clean architecture pattern with three main layers:
 ## Technology Stack
 
 ### Core Libraries
-- **Kotlin** 2.0.0
-- **Jetpack Compose**: Modern declarative UI
+- **Kotlin** 2.2.21: Latest Kotlin language features
+- **Jetpack Compose** (BOM 2025.11.00): Modern declarative UI
 - **Material3**: Material Design 3 components
-- **Navigation Compose**: Navigation between screens
+- **Navigation Compose** 2.9.10: Type-safe navigation with animations
+  - Kotlin Serialization integration for type safety
+  - Smooth slide and fade transitions
+  - Proper back stack management
 
 ### Dependency Injection
-- **Koin** 3.5.3: Lightweight DI framework
+- **Koin** 4.1.1: Lightweight DI framework
 
 ### Networking
-- **Ktor** 2.3.12: HTTP client
+- **Ktor** 3.3.2: Modern HTTP client
   - ktor-client-android
   - ktor-client-core
   - ktor-client-content-negotiation
   - ktor-client-logging
   - ktor-serialization-kotlinx-json
-- **Kotlinx Serialization** 1.7.1: JSON serialization
+- **Kotlinx Serialization** 1.9.0: JSON serialization
 
 ### Asynchronous Programming
-- **Kotlin Coroutines** 1.8.1: Async/await pattern
-- **Lifecycle Runtime KTX** 2.8.4: Lifecycle-aware components
+- **Kotlin Coroutines** 1.10.2: Async/await pattern with structured concurrency
+- **Lifecycle Runtime KTX** 2.9.4: Lifecycle-aware components
 
 ### Image Loading
-- **Coil Compose** 2.7.0: Image loading and caching
+- **Coil Compose** 2.7.0: Image loading and caching with Compose integration
 
 ### Persistence
-- **DataStore Preferences** 1.1.1: Key-value storage
+- **DataStore Preferences** 1.1.7: Modern key-value storage
+- **Room** 2.8.3: SQLite database with compile-time verification
+  - Type-safe SQL queries
+  - Flow-based reactive queries
+  - KSP annotation processing
 
 ### UI/UX
-- **Lottie Compose** 6.5.0: Animations
-- **Material Icons Extended** 1.6.8: Extended icon set
+- **Lottie Compose** 6.7.1: JSON-based animations
+- **Material Icons Extended** 1.7.8: Comprehensive icon set
 
 ### Testing
 - **JUnit** 4.13.2
@@ -93,18 +100,34 @@ The project follows a clean architecture pattern with three main layers:
 ## Key Features
 
 ### Current Features
-1. **Popular Movies List**: Displays popular movies from TMDB
-2. **Movie Details**: Shows detailed information about a selected movie
-3. **Image Loading**: Optimized image loading with Coil
-4. **Error Handling**: Proper error states with retry functionality
-5. **Loading States**: Loading indicators for async operations
+1. **Popular Movies List**: Displays popular movies from TMDB with grid layout
+2. **Movie Details**: Shows detailed information with backdrop images and action buttons
+3. **Search Functionality**: Full-text movie search with debounced input (500ms)
+4. **Favorites**: Save movies to favorites list with Room database persistence
+5. **Watched Movies**: Mark movies as watched and track viewing history
+6. **To-Watch List**: Create and manage a watchlist of movies to watch later
+7. **Image Loading**: Optimized image loading with Coil and caching
+8. **Error Handling**: Proper error states with retry functionality
+9. **Loading States**: Elegant loading indicators for async operations
+10. **Smooth Animations**: Page transitions with slide and fade effects
 
-### Planned Features (To be Implemented)
-1. **Search Functionality**: Search for movies by title
-2. **Favorites**: Save movies to favorites list
-3. **Watched Movies**: Mark movies as watched
-4. **To-Watch List**: Create a watchlist of movies to watch later
-5. **Local Database**: Room database for offline storage
+### Navigation Architecture
+The app uses Navigation Compose 2.9+ with modern best practices:
+- **Type-Safe Navigation**: Kotlin serialization for compile-time safety
+- **Animated Transitions**:
+  - Slide + fade transitions (300ms duration)
+  - Different animations for enter/exit and pop operations
+  - Custom fade transition for home screen
+- **Proper Back Stack Management**: `navigateUp()` for consistent back navigation
+- **Launch Modes**: `launchSingleTop` for list screens to prevent duplicates
+
+### Navigation Routes
+- `Movies` - Home screen with popular movies
+- `MovieDetails(movieId: Int)` - Details screen with parameters
+- `Search` - Search screen with real-time results
+- `Favorites` - User's favorite movies
+- `Watched` - Movies marked as watched
+- `ToWatch` - Watchlist of movies to watch later
 
 ## Project Structure
 
