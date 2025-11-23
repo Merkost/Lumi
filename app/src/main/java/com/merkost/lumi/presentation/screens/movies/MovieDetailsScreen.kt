@@ -14,7 +14,17 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.Event
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.PlaylistAdd
+import androidx.compose.material.icons.filled.PlaylistAddCheck
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.FilledIconButton
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -80,6 +90,7 @@ fun MovieDetailsScreen(
                     MovieDetailsContent(
                         modifier = Modifier,
                         movie = movie,
+                        viewModel = viewModel
                     )
                 }
             )
@@ -90,10 +101,15 @@ fun MovieDetailsScreen(
 @Composable
 fun MovieDetailsContent(
     modifier: Modifier = Modifier,
-    movie: MovieDetails
+    movie: MovieDetails,
+    viewModel: MovieDetailsViewModel
 ) {
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val backdropImageHeight = remember { screenHeight / 3 }
+
+    val isFavorite by viewModel.isFavorite.collectAsState()
+    val isWatched by viewModel.isWatched.collectAsState()
+    val isToWatch by viewModel.isToWatch.collectAsState()
 
     Box(
         modifier = modifier.fillMaxSize(),
@@ -101,7 +117,7 @@ fun MovieDetailsContent(
     ) {
 
         MovieImage(
-            imageUrl = movie.backdropImage?.medium,
+            imageUrl = movie.backdropImage?.original,
             movieTitle = movie.title ?: "",
             modifier = Modifier
                 .fillMaxWidth()
@@ -130,6 +146,15 @@ fun MovieDetailsContent(
                 MovieDetailsRow(
                     runtime = movie.runtime,
                     releaseDate = movie.releaseDate
+                )
+
+                MovieActionButtons(
+                    isFavorite = isFavorite,
+                    isWatched = isWatched,
+                    isToWatch = isToWatch,
+                    onFavoriteClick = { viewModel.toggleFavorite() },
+                    onWatchedClick = { viewModel.toggleWatched() },
+                    onToWatchClick = { viewModel.toggleToWatch() }
                 )
 
                 movie.overview?.let {
@@ -216,5 +241,90 @@ private fun MovieOverview(modifier: Modifier = Modifier, overview: String) {
                 .noRippleClickable { isExpanded = !isExpanded }
 
         )
+    }
+}
+
+@Composable
+private fun MovieActionButtons(
+    isFavorite: Boolean,
+    isWatched: Boolean,
+    isToWatch: Boolean,
+    onFavoriteClick: () -> Unit,
+    onWatchedClick: () -> Unit,
+    onToWatchClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        // Favorite button
+        if (isFavorite) {
+            FilledIconButton(
+                onClick = onFavoriteClick,
+                colors = IconButtonDefaults.filledIconButtonColors(
+                    containerColor = MaterialTheme.colorScheme.errorContainer
+                )
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Favorite,
+                    contentDescription = stringResource(R.string.remove_from_favorites),
+                    tint = MaterialTheme.colorScheme.error
+                )
+            }
+        } else {
+            FilledTonalIconButton(onClick = onFavoriteClick) {
+                Icon(
+                    imageVector = Icons.Default.FavoriteBorder,
+                    contentDescription = stringResource(R.string.add_to_favorites)
+                )
+            }
+        }
+
+        // Watched button
+        if (isWatched) {
+            FilledIconButton(
+                onClick = onWatchedClick,
+                colors = IconButtonDefaults.filledIconButtonColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                )
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Visibility,
+                    contentDescription = stringResource(R.string.mark_as_unwatched),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            }
+        } else {
+            FilledTonalIconButton(onClick = onWatchedClick) {
+                Icon(
+                    imageVector = Icons.Default.VisibilityOff,
+                    contentDescription = stringResource(R.string.mark_as_watched)
+                )
+            }
+        }
+
+        // To Watch button
+        if (isToWatch) {
+            FilledIconButton(
+                onClick = onToWatchClick,
+                colors = IconButtonDefaults.filledIconButtonColors(
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                )
+            ) {
+                Icon(
+                    imageVector = Icons.Default.PlaylistAddCheck,
+                    contentDescription = stringResource(R.string.remove_from_watchlist),
+                    tint = MaterialTheme.colorScheme.tertiary
+                )
+            }
+        } else {
+            FilledTonalIconButton(onClick = onToWatchClick) {
+                Icon(
+                    imageVector = Icons.Default.PlaylistAdd,
+                    contentDescription = stringResource(R.string.add_to_watchlist)
+                )
+            }
+        }
     }
 }

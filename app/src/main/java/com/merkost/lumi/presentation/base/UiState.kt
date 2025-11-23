@@ -5,5 +5,5 @@ import androidx.annotation.StringRes
 sealed class UiState<out T> {
     data object Loading : UiState<Nothing>()
     data class Success<out T>(val data: T) : UiState<T>()
-    data class Error(val message: String, @StringRes val messageRes: Int) : UiState<Nothing>()
+    data class Error(val message: String, @param:StringRes val messageRes: Int) : UiState<Nothing>()
 }

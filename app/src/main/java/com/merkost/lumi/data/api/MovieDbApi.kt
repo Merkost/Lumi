@@ -20,4 +20,13 @@ class MovieDbApi(
     suspend fun getMovieDetails(movieId: Int): MovieDetailsResponse {
         return client.get("movie/$movieId").body()
     }
+
+    suspend fun searchMovies(query: String, page: Int = 1): MoviesResponse {
+        return client.get("search/movie") {
+            url {
+                parameters.append("query", query)
+                parameters.append("page", page.toString())
+            }
+        }.body()
+    }
 }
